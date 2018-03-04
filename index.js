@@ -14,8 +14,10 @@ let snapshot = {}
 const getAccounts = (accountOffset, callback) => {
   return web3.parity.listAccounts(
     5, accountOffset, web3.toHex(snapshotBlock), function (err, result) {
-      if (err)
-        console.fatal(err)
+      if (err) {
+        console.log(err)
+        process.exit(1)
+      }
       callback(result)
     }
   )
@@ -23,8 +25,10 @@ const getAccounts = (accountOffset, callback) => {
 
 const getBalance = (account) => {
   web3.eth.getBalance(account, web3.toHex(snapshotBlock), (err, result) => {
-    if (err)
-      console.fatal(err)
+    if (err) {
+      console.log(err)
+      process.exit(1)
+    }
     snapshot[account] = result.toString(10)
   })
 }
