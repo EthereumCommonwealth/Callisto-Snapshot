@@ -19,7 +19,9 @@ Example:
 
 ## Run
 
-- `node index.js`
+- `node index.js <block_number>`
+
+<block_number> -> MUST be a valid block number.
 
 The script will write a file called snapshot.json with the snapshot info.
 

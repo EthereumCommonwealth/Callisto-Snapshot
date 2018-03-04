@@ -2,7 +2,7 @@ const net = require('net')
 const fs = require('fs')
 const Web3 = require('web3')
 
-const snapshotBlock = "32862" // ETC block
+const snapshotBlock = process.argv[2] || "5500000" // ETC block
 
 const ipcPath = process.env["HOME"] + "/.local/share/io.parity.ethereum/jsonrpc.ipc";
 
