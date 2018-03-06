@@ -4,16 +4,20 @@ const Web3 = require('web3')
 
 const snapshotBlock = process.argv[2] || "5500000" // ETC block
 
-const ipcPath = process.env["HOME"] + "/.local/share/io.parity.ethereum/jsonrpc.ipc";
+// const ipcPath = process.env["HOME"] + "/.local/share/io.parity.ethereum/jsonrpc.ipc";
+
+const ipcPath = "/parity/jsonrpc.ipc"
 
 let web3 = new Web3();
 web3.setProvider(new web3.providers.IpcProvider(ipcPath, net));
 
-let snapshot = {}
+let snapshot = []
+let accounts_count = 0
+let accounts_checked = 0
 
 const getAccounts = (accountOffset, callback) => {
   return web3.parity.listAccounts(
-    5, accountOffset, web3.toHex(snapshotBlock), function (err, result) {
+    300, accountOffset, web3.toHex(snapshotBlock), function (err, result) {
       if (err) {
         console.log(err)
         process.exit(1)
@@ -29,27 +33,45 @@ const getBalance = (account) => {
       console.log(err)
       process.exit(1)
     }
-    snapshot[account] = result.toString(10)
+    let balance = result.toString(10);
+    if (balance === "0")
+      return
+    ++accounts_count
+    snapshot.push({"address": account, "balance": balance})
   })
 }
 
-const writeJSONFile = () => {
-  fs.writeFileSync('snapshot.json', JSON.stringify(snapshot));
+const writeFile = () => {
+  let stream = fs.createWriteStream("snapshot.txt", {flags:'a'})
+  for (var i = 0, len = snapshot.length; i < len; i++) {
+    let account = snapshot[i]
+    stream.write(`${i},${account.address},${account.balance}\n`)
+  }
+  console.log(`Account #${accounts_count} ${new Date().toISOString()}`)
+  stream.end()
+  snapshot = []
+  accounts_count = 0
 }
 
 const getBalances = (accounts) => {
   if (accounts.length === 0) {
-    writeJSONFile()
+    writeFile()
     process.exit()
   }
 
-  accounts.forEach((account, idx) => {
+  if (accounts_count >= 10000) {
+    writeFile()
+  }
+
+  for (var i = 0, len = accounts.length; i < len; i++) {
+    ++accounts_checked
+    let account = accounts[i]
     getBalance(account)
-    if (idx === accounts.length - 1) {
-      console.log("Last address: ", account)
+    if (i === accounts.length - 1) {
+      console.log(`Last address: ${account} - Accounts checked ${accounts_checked} - Accounts count ${accounts_count}`)
       makeSnapshot(account)
     }
-  })
+  }
 }
 
 const makeSnapshot = (accountOffset) => {
