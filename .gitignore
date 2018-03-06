@@ -57,5 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
-
+parity_genesis.json
+geth_genesis.json
 snapshot.json

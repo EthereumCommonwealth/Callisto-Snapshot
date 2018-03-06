@@ -112,7 +112,7 @@ genesis_header = """
           }
         }
       }
-    },"""
+    }"""
 
 addresses_df = pd.read_csv(
     'snapshot/snapshot_0001.txt',
