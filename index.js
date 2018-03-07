@@ -17,7 +17,7 @@ let accounts_checked = 0
 
 const getAccounts = (accountOffset, callback) => {
   return web3.parity.listAccounts(
-    300, accountOffset, web3.toHex(snapshotBlock), function (err, result) {
+    300, accountOffset, "latest", function (err, result) {
       if (err) {
         console.log(err)
         process.exit(1)
@@ -36,7 +36,7 @@ const getBalance = (account) => {
     let balance = result.toString(10);
     if (balance === "0")
       return
-    ++accounts_count
+    accounts_count++
     snapshot.push({"address": account, "balance": balance})
   })
 }
@@ -44,13 +44,11 @@ const getBalance = (account) => {
 const writeFile = () => {
   let stream = fs.createWriteStream("snapshot.txt", {flags:'a'})
   for (var i = 0, len = snapshot.length; i < len; i++) {
-    let account = snapshot[i]
+    let account = snapshot.shift()
     stream.write(`${i},${account.address},${account.balance}\n`)
   }
   console.log(`Account #${accounts_count} ${new Date().toISOString()}`)
   stream.end()
-  snapshot = []
-  accounts_count = 0
 }
 
 const getBalances = (accounts) => {
@@ -59,16 +57,13 @@ const getBalances = (accounts) => {
     process.exit()
   }
 
-  if (accounts_count >= 10000) {
-    writeFile()
-  }
-
   for (var i = 0, len = accounts.length; i < len; i++) {
-    ++accounts_checked
+    accounts_checked++
     let account = accounts[i]
     getBalance(account)
     if (i === accounts.length - 1) {
       console.log(`Last address: ${account} - Accounts checked ${accounts_checked} - Accounts count ${accounts_count}`)
+      writeFile()
       makeSnapshot(account)
     }
   }
