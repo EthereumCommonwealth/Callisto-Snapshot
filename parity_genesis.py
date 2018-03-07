@@ -119,7 +119,11 @@ addresses_df = pd.read_csv(
     header=None, names=['id', 'address', 'balance']
 )
 
+addresses_df = addresses_df.drop_duplicates(subset=['address'], keep='first')
+
 account_format = ',\n"{0}": {{"balance": "{1}"}}'
+
+total_balance = 0
 
 with open('parity_genesis.json', 'a') as genesis_file:
     genesis_file.write(genesis_header)
@@ -129,7 +133,10 @@ with open('parity_genesis.json', 'a') as genesis_file:
                 row.address, row.balance
             )
         )
+        total_balance += int(row.balance)
     genesis_file.write("""
   }
 }
     """)
+
+print(total_balance)

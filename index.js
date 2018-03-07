@@ -17,7 +17,7 @@ let accounts_checked = 0
 
 const getAccounts = (accountOffset, callback) => {
   return web3.parity.listAccounts(
-    300, accountOffset, "latest", function (err, result) {
+    1000, accountOffset, "latest", function (err, result) {
       if (err) {
         console.log(err)
         process.exit(1)
