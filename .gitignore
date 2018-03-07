@@ -60,3 +60,4 @@ typings/
 parity_genesis.json
 geth_genesis.json
 snapshot.json
+.DS_Store
