@@ -1,0 +1,14 @@
+{
+  "name": "callisto-snapshot",
+  "version": "1.0.0",
+  "description": "Callisto snapshot script",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yohan Graterol",
+  "license": "MIT",
+  "dependencies": {
+    "web3": "git+https://github.com/gobitfly/web3.js.git#develop"
+  }
+}
