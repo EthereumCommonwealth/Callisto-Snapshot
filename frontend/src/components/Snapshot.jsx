@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import logo from '../images/clo-logo.png'
 let Web3 = require('web3')
 
-const web3 = new Web3(Web3.givenProvider || "https://clo-testnet.0xinfra.com");
+const web3 = new Web3(Web3.givenProvider || "http://167.114.186.196:8545/")
 
 class Snapshot extends Component {
   constructor(props) {
@@ -27,21 +27,21 @@ class Snapshot extends Component {
       error: false,
     })
     if (web3.utils.isAddress(this.state.address)) {
-      web3.eth.getBalance(this.state.address, null, (res) => {
-        if (res.name === 'Error') {
+      web3.eth.getBalance(this.state.address)
+        .then((res) => {
+          this.setState({
+            message: web3.utils.fromWei(res, 'ether'),
+            error: false,
+            showSpinner: false,
+          })
+        })
+        .catch((err) => {
           this.setState({
             error: res.message,
             message: false,
             showSpinner: false,
           })
-        } else {
-          this.setState({
-            message: res.transactionHash,
-            error: false,
-            showSpinner: false,
-          })
-        }
-      })
+        })
     } else {
       this.setState({
         error: 'Incorrect address format',
@@ -76,7 +76,7 @@ class Snapshot extends Component {
             }}>Submit</a>
           </form>
           {this.state.showSpinner ? <i className="fas fa-circle-notch fa-spin fa-3x fa-fw App-Spinner" /> : null}
-          {this.state.message ? <p className="App-message">Your Callisto Balance is: {this.state.message}</p> : null}
+          {this.state.message ? <p className="App-message">Your Callisto Balance is: {this.state.message} CLO</p> : null}
           {this.state.error ? <p className="App-error">{this.state.error}</p> : null}
         </div>
         <footer className="Footer" key="footer">
