@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import logo from '../images/clo-logo.png'
 let Web3 = require('web3')
 
-const web3 = new Web3(Web3.givenProvider || "http://167.114.186.196:8545/")
+const web3 = new Web3(Web3.givenProvider || "https://clo-testnet.0xinfra.com")
 
 class Snapshot extends Component {
   constructor(props) {
