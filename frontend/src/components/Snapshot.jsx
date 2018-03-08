@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import logo from '../images/clo-logo.png'
 let Web3 = require('web3')
 
-let web3;
-
-if (typeof web3 !== 'undefined') web3 = new Web3(web3.currentProvider)
-else web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+const web3 = new Web3(Web3.givenProvider || "https://clo-testnet.0xinfra.com");
 
 class Snapshot extends Component {
   constructor(props) {
@@ -29,8 +26,8 @@ class Snapshot extends Component {
       showSpinner: true,
       error: false,
     })
-    if (web3.utils.checkAddressChecksum(this.state.address)) {
-      web3.eth.getBalance(this.state.address, web3.eth.defaultBlock(), (res) => {
+    if (web3.utils.isAddress(this.state.address)) {
+      web3.eth.getBalance(this.state.address, null, (res) => {
         if (res.name === 'Error') {
           this.setState({
             error: res.message,
@@ -38,7 +35,6 @@ class Snapshot extends Component {
             showSpinner: false,
           })
         } else {
-          debugger;
           this.setState({
             message: res.transactionHash,
             error: false,
