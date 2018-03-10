@@ -3,7 +3,7 @@ const nib = require("nib");
 
 module.exports = {
   siteMetadata: {
-    title: 'Callisto Network',
+    title: 'Callisto Snapshot',
   },
   plugins: [
     'gatsby-plugin-react-helmet',

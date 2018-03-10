@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
 import logo from '../images/clo-logo.png'
-let Web3 = require('web3')
 
-const web3 = new Web3(Web3.givenProvider || "https://clo-testnet.0xinfra.com")
+if (typeof window !== 'undefined') {
+  const Web3 = require('web3')
+
+  if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+  } else {
+    web3 = new Web3(Web3.givenProvider || "https://clo-testnet.0xinfra.com")
+  }
+}
 
 class Snapshot extends Component {
   constructor(props) {
