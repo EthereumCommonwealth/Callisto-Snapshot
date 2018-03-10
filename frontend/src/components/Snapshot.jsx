@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import logo from '../images/clo-logo.png'
 
+let web3;
+
 if (typeof window !== 'undefined') {
   const Web3 = require('web3')
-
   if (typeof web3 !== 'undefined') {
     web3 = new Web3(web3.currentProvider);
   } else {
