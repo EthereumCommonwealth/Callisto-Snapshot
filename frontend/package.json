@@ -1,0 +1,34 @@
+{
+  "name": "callisto-snapshot",
+  "description": "Callisto snapshot script",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "gatsby": "^1.9.223",
+    "gatsby-link": "^1.6.38",
+    "gatsby-plugin-react-helmet": "^2.0.6",
+    "gatsby-plugin-stylus": "^1.1.16",
+    "net": "^1.0.2",
+    "nib": "^1.1.2",
+    "react-helmet": "^5.2.0",
+    "rupture": "^0.7.1",
+    "web3": "^1.0.0-beta.30"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "deploy-gh": "gh-pages -d public",
+    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.1.0",
+    "prettier": "^1.11.1"
+  }
+}

@@ -1,0 +1,88 @@
+.App
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  padding-top 5em
+  position relative
+  @media all and (min-width 1200px)
+    padding-top 0
+    height 100vh
+  .App-error
+    color red
+    margin-top 1em
+  .App-message
+    margin-top 1em
+    color green
+
+.App-logo
+  height 125px
+  margin-bottom 1em
+
+.App
+  .App-header
+    height 125px
+
+  .App-title
+    font-size 1.5em
+    +from-width($sm)
+      font-size 1.75em
+  .App-intro
+    margin-bottom 1em
+    text-align center
+    font-size 14px
+    +from-width($sm)
+      font-size 1.25em
+.App-form
+  font-size 1em
+  display flex
+  .App-form-input
+    padding .5em
+    border-radius 5px 0 0 5px
+    border solid 1px #c5c5c5
+    font-size 1em
+    width 200px
+    &:focus
+      outline-offset 0
+      outline none
+    +from-width($sm)
+      width 500px
+  .App-form-submit
+    padding .5em 1em
+    background-color #4caf50
+    color #FFF
+    border-radius 0 5px 5px 0
+    font-size 1em
+    border none
+    &:focus
+      outline-offset 0
+      outline none
+    &:hover
+      cursor pointer
+.Footer
+  position relative
+  bottom 0
+  padding 1em
+  +from-width($xl)
+    position absolute
+
+
+
+.Footer-Link
+  text-decoration none
+  color #000
+  &hover
+    cursor pointer
+
+
+
+.App-Spinner
+  font-size 22px
+  margin-top 1em
+  color #4caf50
+
+
+.App-Container
+  display flex
+  flex-direction column
+  align-items center
