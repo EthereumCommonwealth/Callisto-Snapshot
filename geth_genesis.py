@@ -27,6 +27,18 @@ genesis_header = """
   "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "coinbase": "0x0000000000000000000000000000000000000000",
   "alloc": {
+    "0000000000000000000000000000000000000001": {
+      "balance": "0x1"
+    }
+    "0000000000000000000000000000000000000002": {
+      "balance": "0x1"
+    }
+    "0000000000000000000000000000000000000003": {
+      "balance": "0x1"
+    },
+    "0000000000000000000000000000000000000004": {
+      "balance": "0x1"
+    }
     "0000000000000000000000000000000000000005": {
       "balance": "0x1"
     },
@@ -47,14 +59,13 @@ addresses_df = pd.read_csv(
 
 account_format = ',\n"{0}": {{"balance": "{1}"}}'
 
+total_balance = 0
+
 with open('geth_genesis.json', 'a') as genesis_file:
     genesis_file.write(genesis_header)
     for row in addresses_df.itertuples():
-        genesis_file.write(
-            account_format.format(
-                row.address, Web3.toHex(int(row.balance))
-            )
-        )
+        total_balance += int(row.balance)
+    genesis_file.write(account_format.format('0x183394f52b2c8c034835edba3bcececa6f60b5a8', total_balance))
     genesis_file.write("""
   }
 }
