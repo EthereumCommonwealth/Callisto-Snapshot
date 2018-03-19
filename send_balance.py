@@ -21,7 +21,6 @@ transactions_count = 0
 
 
 with open('geth_genesis.json', 'a') as genesis_file:
-    amount_transactions = len(addresses_df.itertuples())
     for row in addresses_df.itertuples():
         transactions_count += 1
         web3.eth.sendTransaction({
