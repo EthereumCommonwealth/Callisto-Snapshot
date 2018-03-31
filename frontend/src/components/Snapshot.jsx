@@ -8,7 +8,7 @@ if (typeof window !== 'undefined') {
   if (typeof web3 !== 'undefined') {
     web3 = new Web3(web3.currentProvider);
   } else {
-    web3 = new Web3(Web3.givenProvider || "https://clo-testnet.0xinfra.com")
+    web3 = new Web3(Web3.givenProvider || "https://clo-testnet3.0xinfra.com")
   }
 }
 

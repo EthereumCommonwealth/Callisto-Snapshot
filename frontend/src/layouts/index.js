@@ -7,7 +7,7 @@ import '../styles/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css';
 
 const TemplateWrapper = ({ children }) => (
   <div>
-    <Helmet title="Callisto Gatsby Starter" />
+    <Helmet title="AirDrop Balance Checker" />
     <div>
       {children()}
     </div>
