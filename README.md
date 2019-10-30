@@ -4,7 +4,7 @@ Callisto Snapshot script and result
 
 ## Requirements
 
-- Node >6 LTS (Tested with Node 8 LTS)
+- Node >6 LTS (Tested with Node 10 LTS)
 - Parity with RPC available and `--fat-db=on` flag.
 
 ## Snapshot info
@@ -19,15 +19,17 @@ Example:
 
 ## Run
 
-- `node index.js <block_number>`
+- `node index.js <block_number> <minimum_balance>`
 
 `<block_number>` -> MUST be a valid block number.
+
+`<minimum_balance>` -> MUST be a valid ether amount to send in wei.
 
 The script will write a file called snapshot.json with the snapshot info.
 
 ## NOTE
 
-`node_modules` exists in the repo because we did a little change on `web3/lib/web3/methods/parity.js` allowing fetch info of `listAccounts` method specifying the block number.
+We are using forked version of web3 module because we did a little change on `web3/lib/web3/methods/parity.js` allowing fetch info of `listAccounts` method specifying the block number.
 
 ```
 var listAccounts = new Method({

@@ -4,6 +4,8 @@ const Web3 = require('web3')
 
 const snapshotBlock = process.argv[2] || "5500000" // ETC block
 
+const cutoff = process.argv[3] ||  10000000000000000  // 0.01 Ether cutoff
+
 // const ipcPath = process.env["HOME"] + "/.local/share/io.parity.ethereum/jsonrpc.ipc";
 
 const ipcPath = "/parity/jsonrpc.ipc"
@@ -17,7 +19,7 @@ let accounts_checked = 0
 
 const getAccounts = (accountOffset, callback) => {
   return web3.parity.listAccounts(
-    1000, accountOffset, "latest", function (err, result) {
+    1000, accountOffset, web3.toHex(snapshotBlock), function (err, result) {
       if (err) {
         console.log(err)
         process.exit(1)
@@ -33,11 +35,23 @@ const getBalance = (account) => {
       console.log(err)
       process.exit(1)
     }
-    let balance = result.toString(10);
-    if (balance === "0")
-      return
-    accounts_count++
-    snapshot.push({"address": account, "balance": balance})
+    if (result < cutoff) {
+      return // excluding address with small balance
+    } else {
+      // get contract account type
+      web3.eth.getCode(account, (err, code) => {
+        if (err) {
+          console.log(err)
+          process.exit(1)
+        }
+        if (code.length > 2) {
+          return // excluding contract address
+        }
+        let balance = result.toString(10);
+        accounts_count++
+        snapshot.push({"address": account, "balance": balance})
+      })
+    }
   })
 }
 

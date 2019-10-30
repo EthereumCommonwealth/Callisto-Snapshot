@@ -9,6 +9,6 @@
   "author": "Yohan Graterol",
   "license": "MIT",
   "dependencies": {
-    "web3": "git+https://github.com/gobitfly/web3.js.git#develop"
+    "web3": "streetcrypto7/web3.js#develop"
   }
 }
