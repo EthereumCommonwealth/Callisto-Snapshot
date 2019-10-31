@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 import time
 import pandas as pd
@@ -9,6 +10,8 @@ from pathlib import Path
 
 ipc_file = os.path.join(Path.home(), '.callisto/testnet/geth.ipc')
 
+sending_account = "0x183394f52b2c8c034835edba3bcececa6f60b5a8"
+
 web3 = Web3(IPCProvider(ipc_file))
 
 addresses_df = pd.read_csv(
@@ -16,25 +19,18 @@ addresses_df = pd.read_csv(
     header=None, names=['id', 'address', 'balance']
 )
 
-total_balance = 0
-transactions_count = 0
+transactions_count = web3.eth.getTransactionCount(sending_account)
 
-
-with open('geth_genesis.json', 'a') as genesis_file:
-    for row in addresses_df.itertuples():
-        transactions_count += 1
-        web3.eth.sendTransaction({
-            'from': '0x183394f52b2c8c034835edba3bcececa6f60b5a8',
-            'to': row.address,
-            'value': int(row.balance),
-            'gas': 21000,
-            'gasPrice': 1800000000000,
-        })
-        total_balance += int(row.balance)
-
-        if transactions_count == 8000:
-            print('Last Transaction Address: {}'.format(row.address))
-            time.sleep(20)
-            transaction_count = 0
-
-print(total_balance)
+for row in addresses_df.itertuples():
+    counting = int(transactions_count)
+    web3.eth.sendTransaction({
+        'from': sending_account,
+        'to': row.address,
+        'value': row.balance,
+        'gas': 21000,
+        'gasPrice': 1000000000,
+        'nonce': counting,
+    })
+    print("Address:",row.address,"Nonce:",counting)
+    transactions_count += 1
+    time.sleep(0.1)
