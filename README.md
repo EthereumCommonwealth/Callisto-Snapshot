@@ -5,7 +5,7 @@ Callisto Snapshot script and result
 ## Requirements
 
 - Node >6 LTS (Tested with Node 10 LTS)
-- Parity with RPC available and `--fat-db=on` flag.
+- Parity with RPC websocket connection available and `--fat-db=on` flag.
 
 ## Snapshot info
 
